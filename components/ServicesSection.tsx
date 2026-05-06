@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight, Check } from "lucide-react";
 import { services } from "@/lib/data";
-import { cardHover, fadeInUp, staggerContainer, viewportOnce } from "@/lib/motion";
+import { cardHover, fadeInUp, staggerContainer, viewportRepeat } from "@/lib/motion";
 import { MotionSection } from "./MotionSection";
 import { SectionHeading } from "./SectionHeading";
 
@@ -21,7 +21,7 @@ export function ServicesSection() {
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={viewportOnce}
+          viewport={viewportRepeat}
           className="grid gap-5 md:grid-cols-2 xl:grid-cols-5"
         >
           {services.map((service) => (
@@ -34,7 +34,7 @@ export function ServicesSection() {
               <h3 className="display-heading text-2xl font-semibold leading-tight text-foreground">
                 {service.name}
               </h3>
-              <p className="mt-4 text-sm leading-6 text-secondary">
+              <p className="mt-4 text-sm leading-6 text-muted">
                 {service.description}
               </p>
               <p className="mt-5 text-sm font-semibold text-primary">
@@ -45,7 +45,7 @@ export function ServicesSection() {
 
               <ul className="space-y-3">
                 {service.features.map((feature) => (
-                  <li key={feature} className="flex gap-3 text-sm leading-6 text-secondary">
+                  <li key={feature} className="flex gap-3 text-sm leading-6 text-muted">
                     <Check
                       className="mt-1 shrink-0 text-primary"
                       size={15}

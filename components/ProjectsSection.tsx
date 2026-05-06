@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { ExternalLink, GitBranch } from "lucide-react";
 import type { Project } from "@/lib/data";
 import { projects } from "@/lib/data";
-import { cardHover, fadeInUp, staggerContainer, viewportOnce } from "@/lib/motion";
+import { cardHover, fadeInUp, staggerContainer, viewportRepeat } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { MotionSection } from "./MotionSection";
 import { SectionHeading } from "./SectionHeading";
@@ -78,7 +78,7 @@ export function ProjectsSection() {
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={viewportOnce}
+          viewport={viewportRepeat}
           className="grid gap-6 lg:grid-cols-2"
         >
           {projects.map((project, index) => (
@@ -97,7 +97,7 @@ export function ProjectsSection() {
                   {project.techStack.slice(0, 4).map((tech) => (
                     <span
                       key={tech}
-                      className="rounded-full bg-cream px-3 py-1.5 text-[11px] font-medium text-secondary"
+                      className="rounded-full bg-cream px-3 py-1.5 text-[11px] font-medium text-muted"
                     >
                       {tech}
                     </span>
@@ -106,7 +106,7 @@ export function ProjectsSection() {
                 <h3 className="display-heading text-3xl font-semibold text-foreground">
                   {project.title}
                 </h3>
-                <p className="mt-3 text-sm leading-7 text-secondary">
+                <p className="mt-3 text-sm leading-7 text-muted">
                   {project.description}
                 </p>
 
@@ -115,7 +115,7 @@ export function ProjectsSection() {
                     <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
                       Problem
                     </p>
-                    <p className="mt-2 text-sm leading-6 text-secondary">
+                    <p className="mt-2 text-sm leading-6 text-muted">
                       {project.problem}
                     </p>
                   </div>
@@ -123,13 +123,13 @@ export function ProjectsSection() {
                     <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
                       Solution
                     </p>
-                    <p className="mt-2 text-sm leading-6 text-secondary">
+                    <p className="mt-2 text-sm leading-6 text-muted">
                       {project.solution}
                     </p>
                   </div>
                 </div>
 
-                <p className="mt-5 text-sm leading-6 text-secondary">
+                <p className="mt-5 text-sm leading-6 text-muted">
                   <span className="font-semibold text-foreground">My role:</span>{" "}
                   {project.role}
                 </p>

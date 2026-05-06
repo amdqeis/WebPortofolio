@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Code2, Database, GitBranch, ServerCog } from "lucide-react";
 import { skills } from "@/lib/data";
-import { cardHover, fadeInUp, staggerContainer, viewportOnce } from "@/lib/motion";
+import { cardHover, fadeInUp, staggerContainer, viewportRepeat } from "@/lib/motion";
 import { MotionSection } from "./MotionSection";
 import { SectionHeading } from "./SectionHeading";
 
@@ -44,7 +44,7 @@ export function SkillsSection() {
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={viewportOnce}
+          viewport={viewportRepeat}
           className="grid gap-5 md:grid-cols-2 xl:grid-cols-4"
         >
           {skillGroups.map((group) => {
@@ -67,7 +67,7 @@ export function SkillsSection() {
                   {group.items.map((item) => (
                     <span
                       key={item}
-                      className="rounded-full border border-secondary/12 bg-soft/70 px-3 py-2 text-xs font-medium text-secondary"
+                      className="rounded-full border border-secondary/12 bg-soft/70 px-3 py-2 text-xs font-medium text-muted"
                     >
                       {item}
                     </span>
@@ -82,14 +82,14 @@ export function SkillsSection() {
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={viewportOnce}
+          viewport={viewportRepeat}
           className="mt-8 flex flex-wrap gap-3"
         >
           {skills.map((skill) => (
             <motion.span
               key={skill}
               variants={fadeInUp}
-              className="rounded-full border border-secondary/14 bg-cream px-4 py-2 text-sm text-secondary shadow-[0_10px_28px_rgba(75,46,43,0.04)]"
+              className="rounded-full border border-secondary/14 bg-cream px-4 py-2 text-sm text-muted shadow-[0_10px_28px_rgba(75,46,43,0.04)]"
             >
               {skill}
             </motion.span>

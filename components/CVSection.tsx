@@ -38,13 +38,13 @@ export function CVSection() {
           >
             <div className="flex items-start justify-between gap-6 border-b border-secondary/12 pb-6">
               <div>
-                <p className="text-xs font-medium uppercase tracking-[0.22em] text-secondary">
+                <p className="text-xs font-medium uppercase tracking-[0.22em] text-muted">
                   Curriculum Vitae
                 </p>
                 <h3 className="display-heading mt-2 text-4xl font-semibold text-foreground">
                   {profile.name}
                 </h3>
-                <p className="mt-2 text-sm text-secondary">{profile.role}</p>
+                <p className="mt-2 text-sm text-muted">{profile.role}</p>
               </div>
               <span className="hidden h-14 w-14 items-center justify-center rounded-full bg-primary/12 text-primary sm:inline-flex">
                 <UserRound size={24} />
@@ -57,7 +57,7 @@ export function CVSection() {
                   <Layers3 size={18} className="text-primary" />
                   <h4 className="font-semibold text-foreground">Summary</h4>
                 </div>
-                <p className="text-sm leading-7 text-secondary">{cv.summary}</p>
+                <p className="text-sm leading-7 text-muted">{cv.summary}</p>
               </div>
 
               <div className="grid gap-6 md:grid-cols-2">
@@ -66,14 +66,14 @@ export function CVSection() {
                     <GraduationCap size={18} className="text-primary" />
                     <h4 className="font-semibold text-foreground">Education</h4>
                   </div>
-                  <p className="text-sm leading-7 text-secondary">{cv.education}</p>
+                  <p className="text-sm leading-7 text-muted">{cv.education}</p>
                 </div>
                 <div>
                   <div className="mb-3 flex items-center gap-3">
                     <UserRound size={18} className="text-primary" />
                     <h4 className="font-semibold text-foreground">Experience</h4>
                   </div>
-                  <p className="text-sm leading-7 text-secondary">{cv.experience}</p>
+                  <p className="text-sm leading-7 text-muted">{cv.experience}</p>
                 </div>
               </div>
 
@@ -83,7 +83,7 @@ export function CVSection() {
                   {cv.skills.map((skill) => (
                     <span
                       key={skill}
-                      className="rounded-full bg-soft px-3 py-2 text-xs font-medium text-secondary"
+                      className="rounded-full bg-soft px-3 py-2 text-xs font-medium text-muted"
                     >
                       {skill}
                     </span>

@@ -10,7 +10,7 @@ export function Footer() {
         >
           {profile.name}
         </a>
-        <div className="flex flex-wrap gap-5 text-sm text-secondary">
+        <div className="flex flex-wrap gap-5 text-sm text-muted">
           {contactLinks.slice(1, 4).map((link) => (
             <a
               key={link.label}
@@ -21,7 +21,7 @@ export function Footer() {
             </a>
           ))}
         </div>
-        <p className="text-sm text-secondary">
+        <p className="text-sm text-muted">
           © 2026 Ahmad Qeis Ismail. All rights reserved.
         </p>
       </div>

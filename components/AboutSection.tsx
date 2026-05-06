@@ -14,14 +14,14 @@ export function AboutSection() {
 
         <div>
           <motion.div variants={staggerContainer} className="space-y-5">
-            <motion.p variants={fadeInUp} className="text-base leading-8 text-secondary">
+            <motion.p variants={fadeInUp} className="text-base leading-8 text-muted">
               With a strong interest in web development and backend development,
               I enjoy building systems that are practical, readable, and useful.
               I like connecting clean interfaces with reliable data flow so every
               feature feels simple for the user and maintainable behind the
               scenes.
             </motion.p>
-            <motion.p variants={fadeInUp} className="text-base leading-8 text-secondary">
+            <motion.p variants={fadeInUp} className="text-base leading-8 text-muted">
               My focus includes backend development, database design, REST API
               structure, authentication, and responsive UI. Outside of code,
               photography keeps me close to composition, light, and visual
@@ -45,7 +45,7 @@ export function AboutSection() {
                 >
                   <Icon className="mb-5 text-primary" size={22} strokeWidth={1.8} />
                   <h3 className="font-semibold text-foreground">{item.title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-secondary">
+                  <p className="mt-3 text-sm leading-6 text-muted">
                     {item.description}
                   </p>
                 </motion.article>

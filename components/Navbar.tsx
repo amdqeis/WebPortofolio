@@ -54,7 +54,7 @@ export function Navbar() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "group relative text-sm text-secondary transition-colors duration-300 hover:text-foreground",
+                  "group relative text-sm text-muted transition-colors duration-300 hover:text-foreground",
                   isActive && "text-foreground"
                 )}
               >
@@ -100,7 +100,7 @@ export function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                className="rounded-full px-4 py-3 text-sm text-secondary transition hover:bg-soft hover:text-foreground"
+                className="rounded-full px-4 py-3 text-sm text-muted transition hover:bg-soft hover:text-foreground"
                 onClick={() => setIsOpen(false)}
               >
                 {link.label}

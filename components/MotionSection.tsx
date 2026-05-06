@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import type { HTMLMotionProps } from "framer-motion";
 import type { ReactNode } from "react";
-import { fadeInUp, viewportOnce } from "@/lib/motion";
+import { fadeInUp, viewportRepeat } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 type MotionSectionProps = HTMLMotionProps<"section"> & {
@@ -23,7 +23,7 @@ export function MotionSection({
       )}
       initial="hidden"
       whileInView="visible"
-      viewport={viewportOnce}
+      viewport={viewportRepeat}
       variants={fadeInUp}
       {...props}
     >

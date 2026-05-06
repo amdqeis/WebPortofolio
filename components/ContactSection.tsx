@@ -3,12 +3,12 @@
 import { motion } from "framer-motion";
 import { Send } from "lucide-react";
 import { contactLinks } from "@/lib/data";
-import { cardHover, fadeInUp, staggerContainer, viewportOnce } from "@/lib/motion";
+import { cardHover, fadeInUp, staggerContainer, viewportRepeat } from "@/lib/motion";
 import { MotionSection } from "./MotionSection";
 import { SectionHeading } from "./SectionHeading";
 
 const inputClass =
-  "w-full rounded-[8px] border border-secondary/16 bg-cream px-4 py-3 text-sm text-foreground placeholder:text-secondary/55 transition duration-300 focus:border-primary focus:ring-4 focus:ring-primary/10";
+  "w-full rounded-[8px] border border-secondary/16 bg-cream px-4 py-3 text-sm text-foreground placeholder:text-muted/55 transition duration-300 focus:border-primary focus:ring-4 focus:ring-primary/10";
 
 export function ContactSection() {
   return (
@@ -25,7 +25,7 @@ export function ContactSection() {
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
-            viewport={viewportOnce}
+            viewport={viewportRepeat}
             className="elegant-card rounded-[8px] p-6 md:p-8"
           >
             <div className="grid gap-5 md:grid-cols-2">
@@ -74,7 +74,7 @@ export function ContactSection() {
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
-            viewport={viewportOnce}
+            viewport={viewportRepeat}
             className="space-y-4"
           >
             {contactLinks.map((link) => {
@@ -95,7 +95,7 @@ export function ContactSection() {
                     <span className="block text-sm font-semibold text-foreground">
                       {link.label}
                     </span>
-                    <span className="mt-1 block truncate text-sm text-secondary">
+                    <span className="mt-1 block truncate text-sm text-muted">
                       {link.value}
                     </span>
                   </span>

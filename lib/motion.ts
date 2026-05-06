@@ -2,9 +2,9 @@ import type { Variants } from "framer-motion";
 
 export const smoothEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
-export const viewportOnce = {
-  once: true,
-  amount: 0.18,
+export const viewportRepeat = {
+  once: false,
+  amount: 0.08,
 };
 
 export const fadeInUp: Variants = {

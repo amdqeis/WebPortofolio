@@ -4,7 +4,13 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDownRight, Download, Mail } from "lucide-react";
 import { useRef } from "react";
 import { profile, quickStats } from "@/lib/data";
-import { fadeInUp, smoothEase, staggerContainer, textReveal } from "@/lib/motion";
+import {
+  fadeInUp,
+  smoothEase,
+  staggerContainer,
+  textReveal,
+  viewportRepeat,
+} from "@/lib/motion";
 
 export function HeroSection() {
   const ref = useRef<HTMLElement>(null);
@@ -36,12 +42,13 @@ export function HeroSection() {
         <motion.div
           variants={staggerContainer}
           initial="hidden"
-          animate="visible"
+          whileInView="visible"
+          viewport={viewportRepeat}
           className="max-w-3xl"
         >
           <motion.p
             variants={fadeInUp}
-            className="mb-5 text-xs font-medium uppercase tracking-[0.28em] text-secondary"
+            className="mb-5 text-xs font-medium uppercase tracking-[0.28em] text-muted"
           >
             Welcome
           </motion.p>
@@ -61,7 +68,7 @@ export function HeroSection() {
           </motion.p>
           <motion.p
             variants={fadeInUp}
-            className="mt-6 max-w-2xl text-base leading-8 text-secondary md:text-lg"
+            className="mt-6 max-w-2xl text-base leading-8 text-muted md:text-lg"
           >
             {profile.intro}
           </motion.p>
@@ -87,7 +94,7 @@ export function HeroSection() {
             </a>
             <a
               href="#contact"
-              className="inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium text-secondary transition duration-300 hover:-translate-y-0.5 hover:bg-soft hover:text-foreground"
+              className="inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium text-muted transition duration-300 hover:-translate-y-0.5 hover:bg-soft hover:text-foreground"
             >
               Contact Me
               <Mail size={16} />
@@ -96,8 +103,9 @@ export function HeroSection() {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.96 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={viewportRepeat}
           transition={{ duration: 0.85, ease: smoothEase, delay: 0.25 }}
           className="relative mx-auto w-full max-w-[430px] lg:ml-auto"
           style={{ y: decorativeY, rotate: decorativeRotate }}
@@ -125,7 +133,7 @@ export function HeroSection() {
                   key={stat.label}
                   className="rounded-[8px] border border-white/50 bg-cream/70 p-3 backdrop-blur"
                 >
-                  <p className="text-[10px] uppercase tracking-[0.18em] text-secondary">
+                  <p className="text-[10px] uppercase tracking-[0.18em] text-muted">
                     {stat.label}
                   </p>
                   <p className="mt-1 text-sm font-semibold text-foreground">
