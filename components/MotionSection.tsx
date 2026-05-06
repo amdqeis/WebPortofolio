@@ -17,7 +17,10 @@ export function MotionSection({
 }: MotionSectionProps) {
   return (
     <motion.section
-      className={cn("scroll-mt-24 py-20 md:py-28", className)}
+      className={cn(
+        "snap-section flex scroll-mt-24 items-center py-20 md:py-28",
+        className
+      )}
       initial="hidden"
       whileInView="visible"
       viewport={viewportOnce}

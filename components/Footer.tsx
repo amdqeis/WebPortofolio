@@ -2,7 +2,7 @@ import { contactLinks, profile } from "@/lib/data";
 
 export function Footer() {
   return (
-    <footer className="bg-soft/50 py-12">
+    <footer className="scroll-mt-24 snap-start bg-soft/50 py-12">
       <div className="section-shell flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
         <a
           href="#home"

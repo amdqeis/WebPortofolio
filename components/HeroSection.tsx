@@ -19,7 +19,7 @@ export function HeroSection() {
     <section
       id="home"
       ref={ref}
-      className="relative flex min-h-screen items-center overflow-hidden border-b border-secondary/10 pt-24"
+      className="snap-section relative flex items-center overflow-hidden border-b border-secondary/10 pt-24"
     >
       <motion.div
         aria-hidden="true"
