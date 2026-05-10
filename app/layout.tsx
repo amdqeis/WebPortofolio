@@ -21,6 +21,17 @@ export const metadata: Metadata = {
     "Portfolio of Ahmad Qeis Ismail, a Web Developer and Backend Enthusiast focused on responsive web applications, clean UI, and reliable backend systems.",
 };
 
+const themeInitScript = `
+(() => {
+  try {
+    const theme = window.localStorage.getItem("portfolio-theme") || "coffee";
+    document.documentElement.dataset.theme = theme;
+  } catch {
+    document.documentElement.dataset.theme = "coffee";
+  }
+})();
+`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -29,8 +40,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${inter.variable} ${cormorant.variable} h-full scroll-smooth antialiased`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className="min-h-full">{children}</body>
     </html>
   );

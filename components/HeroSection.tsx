@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDownRight, Download, Mail } from "lucide-react";
 import { useRef } from "react";
 import { profile, quickStats } from "@/lib/data";
+import { MorphingHeadline } from "./MorphingHeadline";
 import {
   fadeInUp,
   smoothEase,
@@ -62,9 +63,9 @@ export function HeroSection() {
           </div>
           <motion.p
             variants={fadeInUp}
-            className="mt-6 text-2xl font-medium text-foreground md:text-3xl"
+            className="mt-6 flex min-h-10 items-center overflow-hidden"
           >
-            {profile.role}
+            <MorphingHeadline />
           </motion.p>
           <motion.p
             variants={fadeInUp}

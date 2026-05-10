@@ -18,7 +18,7 @@ export default function Home() {
       variants={pageTransition}
       initial="hidden"
       animate="visible"
-      className="min-h-screen bg-cream text-foreground"
+      className="min-h-screen bg-background text-foreground"
     >
       <Navbar />
       <HeroSection />
