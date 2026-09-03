@@ -18,6 +18,8 @@ import { useRef } from "react";
 import type { Project } from "@/lib/data";
 import { projects } from "@/lib/data";
 import { fadeInUp, staggerContainer, viewportRepeat } from "@/lib/motion";
+import { useMediaQuery } from "@/lib/useMediaQuery";
+import { useParallax } from "@/lib/useParallax";
 import { cn } from "@/lib/utils";
 
 type ProjectVisualProps = {
@@ -176,12 +178,14 @@ function ProjectVisual({
                   <span className="h-5 flex-1 rounded-full bg-white/12" />
                 </div>
                 <div className="space-y-2">
-                  {["auth", "booking", "status", "response", "edge-case"].map((item) => (
-                    <div key={item} className="flex items-center gap-3">
-                      <span className="h-2 w-2 rounded-full bg-[#e6b566]" />
-                      <span className="h-2 flex-1 rounded-full bg-white/14" />
-                    </div>
-                  ))}
+                  {["auth", "booking", "status", "response", "edge-case"].map(
+                    (item) => (
+                      <div key={item} className="flex items-center gap-3">
+                        <span className="h-2 w-2 rounded-full bg-[#e6b566]" />
+                        <span className="h-2 flex-1 rounded-full bg-white/14" />
+                      </div>
+                    )
+                  )}
                 </div>
               </div>
             )}
@@ -192,9 +196,11 @@ function ProjectVisual({
                   <div key={item} className="rounded-[8px] bg-cream/88 p-4">
                     <div className="mb-4 h-3 w-20 rounded-full bg-[#1d3b3a]/26" />
                     <div className="space-y-2">
-                      {Array.from({ length: index === 0 ? 4 : 3 }).map((_, row) => (
-                        <div key={row} className="h-2 rounded-full bg-secondary/16" />
-                      ))}
+                      {Array.from({ length: index === 0 ? 4 : 3 }).map(
+                        (_, row) => (
+                          <div key={row} className="h-2 rounded-full bg-secondary/16" />
+                        )
+                      )}
                     </div>
                   </div>
                 ))}
@@ -218,15 +224,39 @@ function ProjectPanel({
 }) {
   const panelRef = useRef<HTMLElement>(null);
   const shouldReduceMotion = useReducedMotion();
+  const isCompactViewport = useMediaQuery("(max-width: 767px)");
+  const intensity = isCompactViewport ? 0.45 : 1;
+  const p = useParallax({ target: panelRef });
+
   const { scrollYProgress } = useScroll({
     target: panelRef,
     offset: ["start end", "end start"],
   });
-  const backgroundY = useTransform(scrollYProgress, [0, 1], [-70, 70]);
-  const imageY = useTransform(scrollYProgress, [0, 1], [64, -64]);
-  const shapeY = useTransform(scrollYProgress, [0, 1], [-34, 42]);
-  const contentY = useTransform(scrollYProgress, [0, 1], [28, -26]);
-  const visualScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.96, 1.02, 0.98]);
+  const backgroundY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [-70 * intensity, 70 * intensity]
+  );
+  const imageY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [64 * intensity, -64 * intensity]
+  );
+  const shapeY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [-34 * intensity, 42 * intensity]
+  );
+  const contentY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [28 * intensity, -26 * intensity]
+  );
+  const visualScale = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    [0.96, 1.02, 0.98]
+  );
 
   const nextTarget = isLast ? "services" : `project-${index + 2}`;
   const nextLabel = isLast ? "Next Section" : "Next Project";
@@ -235,6 +265,8 @@ function ProjectPanel({
     const target = document.getElementById(nextTarget);
     target?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
+
+  const off = shouldReduceMotion ? 0 : 1;
 
   return (
     <motion.article
@@ -249,20 +281,68 @@ function ProjectPanel({
       viewport={viewportRepeat}
       variants={staggerContainer}
     >
+      {/* -- Parallax background layers ------------------------------- */}
       <motion.div
         className="pointer-events-none absolute inset-x-0 top-0 h-[46%] bg-[linear-gradient(180deg,rgba(29,59,58,0.09),rgba(255,248,240,0))]"
-        style={{ y: shouldReduceMotion ? 0 : backgroundY }}
+        style={{ y: off ? backgroundY : 0 }}
       />
+
+      {/* Far decorative blob */}
+      <motion.div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-16 right-[10%] hidden h-80 w-80 rounded-full will-change-transform transform-gpu lg:block"
+        style={{
+          y: off ? p.far : 0,
+          rotate: off ? p.slowRotate : 0,
+          opacity: off ? p.fadeInOut : 1,
+          background:
+            index % 2 === 0
+              ? "radial-gradient(circle, rgba(192,133,82,0.09) 0%, transparent 70%)"
+              : "radial-gradient(circle, rgba(29,59,58,0.09) 0%, transparent 70%)",
+        }}
+      />
+
+      {/* Mid floating square */}
       <motion.div
         className="pointer-events-none absolute bottom-24 left-[8%] h-28 w-44 rounded-[8px] border border-secondary/10 bg-cream/40"
-        style={{ y: shouldReduceMotion ? 0 : shapeY }}
+        style={{ y: off ? shapeY : 0 }}
+      />
+
+      {/* Extra ring  opposite side from square */}
+      <motion.div
+        aria-hidden="true"
+        className="pointer-events-none absolute right-[6%] top-[30%] hidden h-36 w-36 rounded-full border border-primary/14 will-change-transform transform-gpu md:block"
+        style={{
+          y: off ? p.mid : 0,
+          x: off ? p.midX : 0,
+          rotate: off ? p.reverseRotate : 0,
+          opacity: off ? p.pulseOpacity : 1,
+        }}
+      />
+
+      {/* Tiny accent dot */}
+      <motion.div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-[28%] top-[12%] h-8 w-8 rounded-full bg-primary/30 blur-sm will-change-transform transform-gpu"
+        style={{ y: off ? p.foreground : 0, x: off ? p.nearX : 0 }}
+      />
+
+      {/* Secondary accent dot */}
+      <motion.div
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-[18%] right-[28%] hidden h-12 w-12 rounded-[8px] border border-secondary/18 will-change-transform transform-gpu md:block"
+        style={{
+          y: off ? p.near : 0,
+          rotate: off ? p.fastRotate : 0,
+          opacity: off ? p.pulseOpacity : 1,
+        }}
       />
 
       <div className="section-shell relative z-10 grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <motion.div
           className="max-w-2xl"
           variants={fadeInUp}
-          style={{ y: shouldReduceMotion ? 0 : contentY }}
+          style={{ y: off ? contentY : 0 }}
         >
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
             Selected Work {String(index + 1).padStart(2, "0")}

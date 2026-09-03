@@ -1,5 +1,77 @@
 @import "tailwindcss";
 
+@property --background {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #fff8f0;
+}
+
+@property --foreground {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #4b2e2b;
+}
+
+@property --muted {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #8c5a3c;
+}
+
+@property --primary {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #c08552;
+}
+
+@property --secondary {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #8c5a3c;
+}
+
+@property --cream {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #fff8f0;
+}
+
+@property --soft {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #f8eadf;
+}
+
+@property --line {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #ead8c9;
+}
+
+@property --card-bg {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgba(255, 248, 240, 0.72);
+}
+
+@property --card-shadow {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgba(75, 46, 43, 0.07);
+}
+
+@property --divider-color {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgba(140, 90, 60, 0.18);
+}
+
+@property --selection-bg {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgba(192, 133, 82, 0.26);
+}
+
 :root {
   --background: #fff8f0;
   --foreground: #4b2e2b;
@@ -13,8 +85,7 @@
   --card-shadow: rgba(75, 46, 43, 0.07);
   --divider-color: rgba(140, 90, 60, 0.18);
   --selection-bg: rgba(192, 133, 82, 0.26);
-  --theme-reveal: #fff8f0;
-  --theme-reveal-accent: rgba(192, 133, 82, 0.24);
+  --theme-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 [data-theme="coffee"] {
@@ -30,8 +101,6 @@
   --card-shadow: rgba(75, 46, 43, 0.07);
   --divider-color: rgba(140, 90, 60, 0.18);
   --selection-bg: rgba(192, 133, 82, 0.26);
-  --theme-reveal: #fff8f0;
-  --theme-reveal-accent: rgba(192, 133, 82, 0.24);
 }
 
 [data-theme="dark-coffee"] {
@@ -47,8 +116,6 @@
   --card-shadow: rgba(0, 0, 0, 0.24);
   --divider-color: rgba(217, 154, 95, 0.24);
   --selection-bg: rgba(217, 154, 95, 0.3);
-  --theme-reveal: #1e1412;
-  --theme-reveal-accent: rgba(217, 154, 95, 0.28);
 }
 
 @theme inline {
@@ -79,9 +146,6 @@ body {
   color: var(--foreground);
   font-family: var(--font-inter), Arial, Helvetica, sans-serif;
   overflow-x: hidden;
-  transition:
-    background-color 260ms ease,
-    color 260ms ease;
 }
 
 ::selection {
@@ -133,8 +197,8 @@ textarea {
 .theme-toggle-moon,
 .theme-toggle-sun {
   transition:
-    opacity 220ms ease,
-    transform 220ms ease;
+    opacity 700ms var(--theme-ease),
+    transform 700ms var(--theme-ease);
 }
 
 .theme-toggle-sun,
@@ -147,6 +211,39 @@ textarea {
 [data-theme="dark-coffee"] .theme-toggle-sun {
   opacity: 1;
   transform: scale(1) rotate(0deg);
+}
+
+.theme-toggle-orbit {
+  position: absolute;
+  inset: 4px;
+  border: 1px solid color-mix(in srgb, var(--primary) 38%, transparent);
+  border-radius: 999px;
+  opacity: 0;
+  transform: scale(0.62);
+}
+
+.theme-toggle[data-switching="true"] {
+  box-shadow:
+    0 0 0 7px color-mix(in srgb, var(--primary) 10%, transparent),
+    0 14px 32px var(--card-shadow);
+}
+
+.theme-toggle[data-switching="true"] .theme-toggle-orbit {
+  animation: theme-toggle-orbit 1000ms var(--theme-ease) both;
+}
+
+@keyframes theme-toggle-orbit {
+  0% {
+    opacity: 0;
+    transform: scale(0.62) rotate(0deg);
+  }
+  42% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.38) rotate(180deg);
+  }
 }
 
 [data-theme="dark-coffee"] .portfolio-side-nav {
@@ -173,6 +270,22 @@ textarea {
 [data-theme="dark-coffee"] .portfolio-side-nav .bg-primary\/12 {
   background: rgba(217, 154, 95, 0.24);
 }
+
+/* ---------- View Transitions: hard-edge circle reveal ---------- */
+::view-transition-old(root),
+::view-transition-new(root) {
+  /* Disable the default cross-fade so only our JS clip-path runs */
+  animation: none;
+  mix-blend-mode: normal;
+}
+/* Keep the old screenshot on top; the new content is clipped underneath */
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 9999;
+}
+
 
 @media (prefers-reduced-motion: reduce) {
   html {

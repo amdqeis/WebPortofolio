@@ -1,5 +1,23 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## UI animation stack
+
+This portfolio uses Next.js 16, React 19, Tailwind CSS 4, and Framer Motion 12.
+Theme changes use animated CSS color tokens plus a circular reveal from the theme
+button. Section depth uses scroll-linked, three-layer parallax transforms with a
+reduced intensity on small screens. Both systems respect
+`prefers-reduced-motion`.
+
+Animation tuning lives in these locations:
+
+- Theme duration/easing: `--theme-duration` and `--theme-ease` in
+  `app/globals.css`; reveal timing in `components/ThemeToggle.tsx`.
+- Shared section parallax intensity: transform ranges and the mobile multiplier
+  in `components/ParallaxBackdrop.tsx`.
+- Hero and project parallax intensity: transform ranges and the mobile
+  multiplier in `components/HeroSection.tsx` and
+  `components/ProjectsSection.tsx`.
+
 ## Getting Started
 
 First, run the development server:
