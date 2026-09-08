@@ -1,0 +1,13 @@
+Dockerfile*
+docker-compose*
+.dockerignore
+node_modules
+npm-debug.log
+.next
+.git
+.gitignore
+.agents
+.gemini
+README.md
+CLAUDE.md
+memori.md
