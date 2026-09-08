@@ -3,11 +3,17 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: webportfolio
+    container_name: webportofolio
     restart: unless-stopped
-    ports:
-      - "3000:3000"
+    networks:
+      - caddy_net
     environment:
       - NODE_ENV=production
       - PORT=3000
       - HOSTNAME=0.0.0.0
+    expose:
+      - "3000"
+
+networks:
+  caddy_net:
+    external: true
