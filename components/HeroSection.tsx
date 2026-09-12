@@ -8,6 +8,7 @@ import {
 } from "framer-motion";
 import { ArrowDownRight, Download, Mail } from "lucide-react";
 import { useRef } from "react";
+import { scrollToSection } from "@/lib/scrollToSection";
 import { profile, quickStats } from "@/lib/data";
 import { useMediaQuery } from "@/lib/useMediaQuery";
 import { useParallax } from "@/lib/useParallax";
@@ -191,13 +192,14 @@ export function HeroSection() {
             variants={fadeInUp}
             className="mt-9 flex flex-col gap-4 sm:flex-row sm:flex-wrap"
           >
-            <a
-              href="#projects"
+            <button
+              type="button"
+              onClick={() => scrollToSection("projects")}
               className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-7 py-3.5 text-sm font-medium text-white shadow-[0_14px_34px_rgba(192,133,82,0.26)] transition duration-300 hover:-translate-y-0.5 hover:bg-secondary"
             >
               View Projects
               <ArrowDownRight size={17} />
-            </a>
+            </button>
             <a
               href={process.env.NEXT_PUBLIC_CV_URL ?? profile.cvHref}
               target="_blank"
@@ -207,13 +209,14 @@ export function HeroSection() {
               Download CV
               <Download size={16} />
             </a>
-            <a
-              href="#contact"
+            <button
+              type="button"
+              onClick={() => scrollToSection("contact")}
               className="inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium text-muted transition duration-300 hover:-translate-y-0.5 hover:bg-soft hover:text-foreground"
             >
               Contact Me
               <Mail size={16} />
-            </a>
+            </button>
           </motion.div>
         </motion.div>
 

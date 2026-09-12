@@ -4,6 +4,7 @@ import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { navLinks, projects } from "@/lib/data";
 import { cn } from "@/lib/utils";
+import { scrollToSection } from "@/lib/scrollToSection";
 import { PortfolioSideNav } from "./PortfolioSideNav";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -49,13 +50,13 @@ export function Navbar() {
       <header className="fixed left-0 top-0 z-50 w-full border-b border-secondary/10 bg-cream/82 backdrop-blur-xl">
         <nav className="section-shell flex h-20 items-center justify-between gap-4">
           <div className="flex min-w-0 items-center">
-            <a
-              href="#home"
+            <button
+              type="button"
               className="display-heading truncate text-xl font-semibold text-foreground md:text-2xl"
-              onClick={closeSideNav}
+              onClick={() => { scrollToSection("home"); closeSideNav(); }}
             >
               Ahmad Qeis Ismail
-            </a>
+            </button>
           </div>
 
           <div className="hidden items-center gap-7 lg:flex">
@@ -66,9 +67,10 @@ export function Navbar() {
                 (id === "projects" && activeId.startsWith("project-"));
 
               return (
-                <a
+                <button
                   key={link.href}
-                  href={link.href}
+                  type="button"
+                  onClick={() => scrollToSection(id)}
                   className={cn(
                     "group relative text-sm text-muted transition-colors duration-300 hover:text-foreground",
                     isActive && "text-foreground"
@@ -82,17 +84,18 @@ export function Navbar() {
                       "group-hover:scale-x-100"
                     )}
                   />
-                </a>
+                </button>
               );
             })}
           </div>
 
-          <a
-            href="#contact"
+          <button
+            type="button"
+            onClick={() => scrollToSection("contact")}
             className="hidden rounded-full bg-primary px-6 py-3 text-sm font-medium text-white shadow-[0_10px_28px_rgba(192,133,82,0.22)] transition duration-300 hover:-translate-y-0.5 hover:bg-secondary lg:inline-flex"
           >
             Hire Me
-          </a>
+          </button>
         </nav>
       </header>
 
