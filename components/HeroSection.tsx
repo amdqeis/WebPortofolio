@@ -199,8 +199,9 @@ export function HeroSection() {
               <ArrowDownRight size={17} />
             </a>
             <a
-              href={profile.cvHref}
-              download
+              href={process.env.NEXT_PUBLIC_CV_URL ?? profile.cvHref}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 rounded-full border border-secondary/30 px-7 py-3.5 text-sm font-medium text-foreground transition duration-300 hover:-translate-y-0.5 hover:border-primary hover:bg-soft"
             >
               Download CV
@@ -227,29 +228,16 @@ export function HeroSection() {
             rotate: off ? decorativeRotate : 0,
           }}
         >
-          {/* Future profile photo placeholder */}
-          <div className="relative aspect-[4/5] overflow-hidden rounded-[8px] border border-secondary/15 bg-[linear-gradient(145deg,#f8eadf_0%,#fff8f0_38%,#e8cdb7_100%)] shadow-[0_28px_80px_rgba(75,46,43,0.14)]">
-            <div className="absolute inset-8 rounded-[8px] border border-white/50" />
-            <motion.div
-              className="absolute left-10 top-12 h-28 w-28 rounded-full bg-primary/25 blur-sm will-change-transform transform-gpu"
-              style={{ y: off ? p.near : 0 }}
+          {/* Profile photo */}
+          <div className="relative aspect-[4/5] overflow-hidden rounded-[8px] border border-secondary/15 shadow-[0_28px_80px_rgba(75,46,43,0.14)]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/Profile.jpeg"
+              alt="Ahmad Qeis Ismail"
+              className="absolute inset-0 h-full w-full object-cover object-top"
             />
-            <motion.div
-              className="absolute bottom-12 right-10 h-36 w-36 rounded-full border border-secondary/25 will-change-transform transform-gpu"
-              style={{ y: off ? p.mid : 0, rotate: off ? p.slowRotate : 0 }}
-            />
-            <motion.div
-              className="absolute bottom-24 left-12 h-24 w-24 rounded-full bg-secondary/20 will-change-transform transform-gpu"
-              style={{ y: off ? p.midFar : 0 }}
-            />
-            <div className="absolute right-12 top-14 h-40 w-24 rounded-full bg-white/34 blur-xl" />
-            <motion.div
-              className="absolute left-1/2 top-1/2 h-52 w-52 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/25 will-change-transform transform-gpu"
-              style={{
-                scale: off ? p.breatheScale : 1,
-                rotate: off ? p.reverseRotate : 0,
-              }}
-            />
+            {/* subtle gradient overlay so stat cards stay readable */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
             <div className="absolute inset-x-10 bottom-9 grid grid-cols-3 gap-3">
               {quickStats.map((stat) => (
                 <div

@@ -1,8 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Send } from "lucide-react";
-import { useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { CheckCircle, Loader2, Send, XCircle } from "lucide-react";
+import { useRef, useState } from "react";
 import { contactLinks } from "@/lib/data";
 import { cardHover, fadeInUp, staggerContainer, viewportRepeat } from "@/lib/motion";
 import { useParallax } from "@/lib/useParallax";
@@ -10,7 +10,9 @@ import { MotionSection } from "./MotionSection";
 import { SectionHeading } from "./SectionHeading";
 
 const inputClass =
-  "w-full rounded-[8px] border border-secondary/16 bg-cream px-4 py-3 text-sm text-foreground placeholder:text-muted/55 transition duration-300 focus:border-primary focus:ring-4 focus:ring-primary/10";
+  "w-full rounded-[8px] border border-secondary/16 bg-cream px-4 py-3 text-sm text-foreground placeholder:text-muted/55 transition duration-300 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none";
+
+type FormStatus = "idle" | "loading" | "success" | "error";
 
 function ContactParallaxLayer() {
   const ref = useRef<HTMLDivElement>(null);
@@ -47,6 +49,156 @@ function ContactParallaxLayer() {
   );
 }
 
+function ContactForm({ parallaxY }: { parallaxY: ReturnType<typeof useParallax>["mid"] }) {
+  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
+  const [status, setStatus] = useState<FormStatus>("idle");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("loading");
+    setErrorMsg("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error ?? "Failed to send message.");
+      }
+
+      setStatus("success");
+      setForm({ name: "", email: "", subject: "", message: "" });
+    } catch (err) {
+      setStatus("error");
+      setErrorMsg(err instanceof Error ? err.message : "Something went wrong.");
+    }
+  };
+
+  return (
+    <motion.form
+      onSubmit={handleSubmit}
+      variants={staggerContainer}
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewportRepeat}
+      className="elegant-card rounded-[8px] p-6 md:p-8 will-change-transform transform-gpu"
+      style={{ y: parallaxY }}
+    >
+      <div className="grid gap-5 md:grid-cols-2">
+        <motion.label variants={fadeInUp} className="block">
+          <span className="mb-2 block text-sm font-medium text-foreground">Name</span>
+          <input
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+            className={inputClass}
+            placeholder="Your name"
+            type="text"
+            required
+            disabled={status === "loading"}
+          />
+        </motion.label>
+        <motion.label variants={fadeInUp} className="block">
+          <span className="mb-2 block text-sm font-medium text-foreground">Email</span>
+          <input
+            name="email"
+            value={form.email}
+            onChange={handleChange}
+            className={inputClass}
+            placeholder="you@example.com"
+            type="email"
+            required
+            disabled={status === "loading"}
+          />
+        </motion.label>
+      </div>
+
+      <motion.label variants={fadeInUp} className="mt-5 block">
+        <span className="mb-2 block text-sm font-medium text-foreground">Subject</span>
+        <input
+          name="subject"
+          value={form.subject}
+          onChange={handleChange}
+          className={inputClass}
+          placeholder="Project inquiry"
+          type="text"
+          required
+          disabled={status === "loading"}
+        />
+      </motion.label>
+
+      <motion.label variants={fadeInUp} className="mt-5 block">
+        <span className="mb-2 block text-sm font-medium text-foreground">Message</span>
+        <textarea
+          name="message"
+          value={form.message}
+          onChange={handleChange}
+          className={`${inputClass} min-h-40 resize-none`}
+          placeholder="Tell me about your project, goals, timeline, or idea."
+          required
+          disabled={status === "loading"}
+        />
+      </motion.label>
+
+      {/* Status feedback */}
+      <AnimatePresence mode="wait">
+        {status === "success" && (
+          <motion.p
+            key="success"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            className="mt-4 flex items-center gap-2 text-sm text-green-600"
+          >
+            <CheckCircle size={16} />
+            Message sent! I&apos;ll get back to you soon.
+          </motion.p>
+        )}
+        {status === "error" && (
+          <motion.p
+            key="error"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            className="mt-4 flex items-center gap-2 text-sm text-red-500"
+          >
+            <XCircle size={16} />
+            {errorMsg}
+          </motion.p>
+        )}
+      </AnimatePresence>
+
+      <motion.button
+        variants={fadeInUp}
+        type="submit"
+        disabled={status === "loading"}
+        className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-sm font-medium text-white shadow-[0_14px_34px_rgba(192,133,82,0.24)] transition duration-300 hover:-translate-y-0.5 hover:bg-secondary disabled:cursor-not-allowed disabled:opacity-60"
+      >
+        {status === "loading" ? (
+          <>
+            Sending…
+            <Loader2 size={16} className="animate-spin" />
+          </>
+        ) : (
+          <>
+            Send Message
+            <Send size={16} />
+          </>
+        )}
+      </motion.button>
+    </motion.form>
+  );
+}
+
 function ContactContent() {
   const ref = useRef<HTMLDivElement>(null);
   const p = useParallax({ target: ref as React.RefObject<HTMLElement | null> });
@@ -65,59 +217,7 @@ function ContactContent() {
       </motion.div>
 
       <div className="grid gap-8 lg:grid-cols-[0.58fr_0.42fr]">
-        <motion.form
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportRepeat}
-          className="elegant-card rounded-[8px] p-6 md:p-8 will-change-transform transform-gpu"
-          style={{ y: p.mid }}
-        >
-          <div className="grid gap-5 md:grid-cols-2">
-            <motion.label variants={fadeInUp} className="block">
-              <span className="mb-2 block text-sm font-medium text-foreground">
-                Name
-              </span>
-              <input className={inputClass} placeholder="Your name" type="text" />
-            </motion.label>
-            <motion.label variants={fadeInUp} className="block">
-              <span className="mb-2 block text-sm font-medium text-foreground">
-                Email
-              </span>
-              <input
-                className={inputClass}
-                placeholder="you@example.com"
-                type="email"
-              />
-            </motion.label>
-          </div>
-
-          <motion.label variants={fadeInUp} className="mt-5 block">
-            <span className="mb-2 block text-sm font-medium text-foreground">
-              Subject
-            </span>
-            <input className={inputClass} placeholder="Project inquiry" type="text" />
-          </motion.label>
-
-          <motion.label variants={fadeInUp} className="mt-5 block">
-            <span className="mb-2 block text-sm font-medium text-foreground">
-              Message
-            </span>
-            <textarea
-              className={`${inputClass} min-h-40 resize-none`}
-              placeholder="Tell me about your project, goals, timeline, or idea."
-            />
-          </motion.label>
-
-          <motion.button
-            variants={fadeInUp}
-            type="button"
-            className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-sm font-medium text-white shadow-[0_14px_34px_rgba(192,133,82,0.24)] transition duration-300 hover:-translate-y-0.5 hover:bg-secondary"
-          >
-            Send Message
-            <Send size={16} />
-          </motion.button>
-        </motion.form>
+        <ContactForm parallaxY={p.mid} />
 
         <motion.div
           variants={staggerContainer}

@@ -205,11 +205,10 @@ export const cv = {
 };
 
 export const contactLinks = [
-  { label: "Email", value: "ahmad.qeis@example.com", href: "mailto:ahmad.qeis@example.com", icon: Mail },
-  { label: "LinkedIn", value: "linkedin.com/in/ahmadqeis", href: "#", icon: BriefcaseBusiness },
-  { label: "GitHub", value: "github.com/ahmadqeis", href: "#", icon: GitBranch },
-  { label: "Instagram", value: "@ahmadqeis", href: "#", icon: Globe2 },
-  { label: "WhatsApp", value: "+62 812-0000-0000", href: "#", icon: MessageCircle },
+  { label: "Email", value: "ahmad.qeis122@gmail.com", href: "mailto:ahmad.qeis122@gmail.com", icon: Mail },
+  { label: "LinkedIn", value: "linkedin.com/in/amdqeis", href: "https://linkedin.com/in/amdqeis", icon: BriefcaseBusiness },
+  { label: "GitHub", value: "github.com/amdqeis", href: "https://github.com/amdqeis", icon: GitBranch },
+  { label: "Instagram", value: "@amdqeis__", href: "https://instagram.com/amdqeis__", icon: Globe2 },
 ];
 
 export const quickStats = [

@@ -253,15 +253,8 @@ export function PortfolioSideNav({
               </FilesHighlight>
             </Files>
 
-            <div className="border-t border-secondary/12 p-4">
-              <div className="rounded-[8px] border border-secondary/12 bg-soft/56 p-3">
-                <p className="text-xs font-medium text-foreground">Quick path</p>
-                <p className="mt-1 text-xs leading-5 text-muted">
-                  {navLinks.length} sections, {projects.length} selected works
-                  indexed from portfolio data.
-                </p>
-              </div>
-            </div>
+
+
 
             <button
               type="button"

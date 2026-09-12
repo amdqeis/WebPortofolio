@@ -60,8 +60,9 @@ function CVContent() {
           description="A resume-style section for quick scanning, with a document preview visual and a placeholder download button for the final CV file."
         />
         <a
-          href={profile.cvHref}
-          download
+          href={process.env.NEXT_PUBLIC_CV_URL ?? profile.cvHref}
+          target="_blank"
+          rel="noopener noreferrer"
           className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-white shadow-[0_14px_34px_rgba(192,133,82,0.24)] transition duration-300 hover:-translate-y-0.5 hover:bg-secondary"
         >
           Download CV

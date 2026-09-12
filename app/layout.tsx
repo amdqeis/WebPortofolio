@@ -19,6 +19,10 @@ export const metadata: Metadata = {
   title: "Ahmad Qeis Ismail | Web Developer",
   description:
     "Portfolio of Ahmad Qeis Ismail, a Web Developer and Backend Enthusiast focused on responsive web applications, clean UI, and reliable backend systems.",
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 const themeInitScript = `
